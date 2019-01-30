@@ -1,0 +1,17 @@
+Team Website: 	http://sddec19-17.sd.ece.iastate.edu
+
+
+Uploading Files
+Tutorials:	https://sdweb.ece.iastate.edu/help.html 
+
+Windows Share: 	smb://sdweb.ece.iastate.edu
+				University username and password
+
+SSH:	sftp://sdweb.ece.iastate.edu
+		Username: sddec19-17
+		Password: vlys1xh5
+
+		
+Project repository up on GitLab at https://git.ece.iastate.edu
+
+Request virtual machines at https://admin.ece.iastate.edu/support/?page=vmrequest 
