@@ -33,7 +33,7 @@ class DCMotor(object):
         self.channel = channel
         self.select = select
         self.dcycle_map = dcycle_map
-        self.setpoint = MotorSpeedEnum.STOP
+        self.speed_setting = MotorSpeedEnum.STOP
 
         # Configure PWM channel with initial duty cycle of 0
         PWM.start(channel=self.channel,
@@ -43,11 +43,11 @@ class DCMotor(object):
         # Configure GPIO pin controlling motor direction
         GPIO.setup(self.select, GPIO.OUT)
 
-    def set_speed(self, setpoint, direction=None):
+    def set_speed(self, speed_setting, direction=None):
         '''
         Sets the motor speed
 
-        :param setpoint: Speed setting to set motor to
+        :param speed_setting: Speed setting to set motor to
         :param direction: Motor direction
                           0 for forward, 1 for reverse, None for no change
         '''
@@ -56,7 +56,7 @@ class DCMotor(object):
                                                  ' for motor speed'
 
         # Get the appropriate duty cycle
-        dcycle = self.dcycle_map[setpoint]
+        dcycle = self.dcycle_map[speed_setting]
 
         # Set direction if necessary
         if direction is not None:
@@ -66,4 +66,4 @@ class DCMotor(object):
         PWM.set_duty_cycle(self.channel, dcycle)
 
         # Track active speed setting
-        self.setpoint = setpoint
+        self.speed_setting = speed_setting

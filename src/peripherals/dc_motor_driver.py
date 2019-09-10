@@ -1,6 +1,7 @@
 '''
 Module providing functionality for manipulating system's DC motors
 '''
+import Adafruit_BBIO.GPIO as GPIO
 import dc_motor as dcm
 import enum
 from shared import pins
@@ -8,6 +9,8 @@ import time
 
 _g_L_MOTOR_INDEX = 0        # Index of left motor in motor list
 _g_R_MOTOR_INDEX = 1        # Index of right motor in motor list
+_g_DRIVER_MODE_PHASE_ENABLE = GPIO.HIGH     # DRV8835 PHASE/ENABLE mode
+_g_DRIVER_MODE_IN_IN = GPIO.LOW             # DRV8835 IN/IN mode
 
 # TODO Fine tune duty cycles for motors
 _g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
@@ -28,7 +31,7 @@ class TurnDirectionEnum(enum.Enum):
     LEFT = enum.auto()
 
 
-def init(l_channel, l_select, r_channel, r_select):
+def init(l_channel, l_select, r_channel, r_select, mode_sel):
     '''
     Initializes specified pins for PWM communication with DC motors
 
@@ -36,6 +39,7 @@ def init(l_channel, l_select, r_channel, r_select):
     :param l_select: GPIO pin controlling direction of left DC motor
     :param r_channel: PWM pin controlling right DC motor's PWM signal
     :param r_select: GPIO pin controlling direction of right DC motor
+    :param mode_sel: GPIO pin controlling mode of DRV8835 motor driver
     '''
     # Ensure proper function usage (can be removed/refactored later)
     assert (l_channel in pins.PWM_PINS), 'Given pin must be a PWM capable pin'
@@ -56,14 +60,18 @@ def init(l_channel, l_select, r_channel, r_select):
                                               r_select,
                                               _g_R_DCYCLES)
 
+    # Set the DRV8835 mode to PHASE/ENABLE for simplest usage
+    GPIO.setup(mode_sel, GPIO.OUT)
+    GPIO.output(mode_sel, _g_DRIVER_MODE_PHASE_ENABLE)
+
     _g_initialized = True
 
 
-def set_speed(setpoint, direction):
+def set_speed(speed_setting, direction):
     '''
     Sets the base speed for DC motors
 
-    :param setpoint: Speed to set motors
+    :param speed_setting: Speed to set motors
     :param direction: Motor direction
                       0 for forward, 1 for reverse, don't care for braking
     '''
@@ -71,13 +79,13 @@ def set_speed(setpoint, direction):
     assert (_g_initialized), "DC Motors were not initialized"
 
     try:
-        dcm.MotorSpeedEnum(setpoint)
+        dcm.MotorSpeedEnum(speed_setting)
     except ValueError:
         raise AssertionError('Invalid motor speed setting')
 
     # Set both motors to the same speed and direction
     for motor in _g_motors:
-        motor.set_speed(setpoint, direction)
+        motor.set_speed(speed_setting, direction)
 
 
 def __normalize_turn(degree, direction):
@@ -126,7 +134,7 @@ def turn(degree, direction):
     norm_degr, norm_dir = __normalize_turn(int(degree), direction)
 
     # Record current speed
-    orig_setpoint = _g_motors[_g_L_MOTOR_INDEX].setpoint
+    orig_speed_setting = _g_motors[_g_L_MOTOR_INDEX].speed_setting
 
     # Stop the robot
     stop_time = 0.5
@@ -134,7 +142,7 @@ def turn(degree, direction):
 
     time.sleep(stop_time)
 
-    # TODO Calculate time to turn based on how far turn is
+    # TODO Calculate time to turn based on degrees
     turn_time = 1.0
 
     # Turn robot
@@ -148,4 +156,4 @@ def turn(degree, direction):
     time.sleep(turn_time)
 
     # Restore original speed
-    set_speed(orig_setpoint)
+    set_speed(orig_speed_setting)
