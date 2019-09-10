@@ -1,1 +1,7 @@
 # Files and directories to omit from remote repository
+
+# Compiled python files
+__pycache__
+
+# Visual Studio Code auto generated settings
+.vscode
