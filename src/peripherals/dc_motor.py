@@ -5,7 +5,8 @@ import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import enum
 
-_g_SPD_DIR_VALUES = [0, 1, None]  # Valid values for speed direction
+_g_PWM_FREQ = 2000                  # PWM frequency in HZ
+_g_SPD_DIR_VALUES = [0, 1, None]    # Valid values for speed direction
 
 
 class MotorSpeedEnum(enum.Enum):
@@ -20,23 +21,21 @@ class MotorSpeedEnum(enum.Enum):
 
 
 class DCMotor(object):
-    def __init__(self, channel, select, freq, dcycle_map):
+    def __init__(self, channel, select, dcycle_map):
         '''
         Initializes DC motor for PWM communication with specified pin
 
         :param channel: PWM pin controlling DC motor's PWM signal
         :param select: GPIO pin controlling motor direction
-        :param freq: PWM frequency
         :param dcycle_map: Mapping between speed setting and duty cycle
         '''
         self.channel = channel
         self.select = select
-        self.freq = freq
         self.dcycle_map = dcycle_map
         self.setpoint = MotorSpeedEnum.STOP
 
         # Configure PWM channel with initial duty cycle of 0
-        PWM.start(channel=self.channel, duty_cycle=0, frequency=freq)
+        PWM.start(channel=self.channel, duty_cycle=0, frequency=_g_PWM_FREQ)
 
         # Configure GPIO pin controlling motor direction
         GPIO.setup(self.select, GPIO.OUT)

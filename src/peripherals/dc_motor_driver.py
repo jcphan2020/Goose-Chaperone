@@ -8,7 +8,6 @@ import time
 
 _g_L_MOTOR_INDEX = 0        # Index of left motor in motor list
 _g_R_MOTOR_INDEX = 1        # Index of right motor in motor list
-_g_PWM_FREQ = 2000          # PWM frequency in HZ
 
 # TODO Fine tune duty cycles for motors
 _g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
@@ -51,12 +50,10 @@ def init(l_channel, l_select, r_channel, r_select):
     # Initialize both of system's DC motors
     _g_motors[_g_L_MOTOR_INDEX] = dcm.DCMotor(l_channel,
                                               l_select,
-                                              _g_PWM_FREQ,
                                               _g_L_DCYCLES)
 
     _g_motors[_g_R_MOTOR_INDEX] = dcm.DCMotor(r_channel,
                                               r_select,
-                                              _g_PWM_FREQ,
                                               _g_R_DCYCLES)
 
     _g_initialized = True
