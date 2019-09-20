@@ -1,0 +1,34 @@
+{
+    "route": [
+        {
+            "placemark": 1,
+            "longitude": "-93.6334481",
+            "latitude": "42.0311915"
+        },
+        {
+            "placemark": 2,
+            "longitude": "-93.6334803",
+            "latitude": "42.0308608"
+        },
+        {
+            "placemark": 3,
+            "longitude": "-93.6333891",
+            "latitude": "42.0305181"
+        },
+        {
+            "placemark": 4,
+            "longitude": "-93.6325415",
+            "latitude": "42.0303946"
+        },
+        {
+            "placemark": 5,
+            "longitude": "-93.6322089",
+            "latitude": "42.0307891"
+        },
+        {
+            "placemark": 6,
+            "longitude": "-93.6327454",
+            "latitude": "42.031064"
+        }
+    ]
+}
