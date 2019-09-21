@@ -13,6 +13,7 @@ _g_DRIVER_MODE_PHASE_ENABLE = GPIO.HIGH     # DRV8835 PHASE/ENABLE mode
 _g_DRIVER_MODE_IN_IN = GPIO.LOW             # DRV8835 IN/IN mode
 
 # TODO Fine tune duty cycles for motors
+# Motor Speed Setting: Duty Cycle
 _g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
                 dcm.MotorSpeedEnum.PATROL: 30, dcm.MotorSpeedEnum.FAST: 75,
                 dcm.MotorSpeedEnum.TURN: 15}
@@ -88,6 +89,13 @@ def set_speed(speed_setting, direction):
         motor.set_speed(speed_setting, direction)
 
 
+def stop():
+    '''
+    Method for bringing DC motors to a stop
+    '''
+    set_speed(dcm.MotorSpeedEnum.STOP)
+
+
 def __normalize_turn(degree, direction):
     '''
     Normalizes turn instructions (i.e. 271 LEFT -> 89 RIGHT)
@@ -138,7 +146,7 @@ def turn(degree, direction):
 
     # Stop the robot
     stop_time = 0.5
-    set_speed(dcm.MotorSpeedEnum.STOP)
+    stop()
 
     time.sleep(stop_time)
 
