@@ -115,16 +115,19 @@ class Stepper(object):
         # Number of steps to rotate (floor and convert to int)
         steps = int(math.fabs(degrees * self._steps_per_deg))
 
-        # Full step and direction calculations
-        # TODO Clean this section up and keep track of stepper's angle
-        if self.full_step:
-            direction = 2
-        else:
-            direction = 1
+        # 'cmd_step' determines command sequence to send to board driver
+        # 'direction' is which way iteration through commands is happening
+        # Changing 'direction' changes which way stepper motor rotates
+        cmd_step = 2
+        direction = 1
+
+        if not self.full_step:
+            cmd_step = 1
             step_delay /= 2  # Twice the steps means half the delay
 
         if degrees < 0:
-            direction *= -1
+            direction = -1
+            cmd_step *= direction
 
         # Begin rotation
         for step in range(steps):
@@ -133,7 +136,9 @@ class Stepper(object):
             time.sleep(step_delay)
 
             # Determine next command to send
-            self._next_cmd = (self._next_cmd + direction) % StepCmd.NUM_CMD
+            self._next_cmd = (self._next_cmd + cmd_step) % StepCmd.NUM_CMD
+
+            # TODO Track stepper's angle
 
         # Set pins to low to hold the stepper's angle
         self.__reset_pins()
