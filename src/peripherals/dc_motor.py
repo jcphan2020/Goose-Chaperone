@@ -1,5 +1,5 @@
 '''
-Module providing structure representing a DC motor
+Driver for initializing and utilizing a DC motor.
 '''
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM

@@ -1,5 +1,5 @@
 '''
-Module providing functionality for manipulating system's DC motors
+Controller for manipulating system's two DC motors.
 '''
 import Adafruit_BBIO.GPIO as GPIO
 import dc_motor as dcm

@@ -1,6 +1,5 @@
 '''
-Module providing structure for interacting with stepper motor
-via ULN2003 driver board.
+Driver for interacting with stepper motor via ULN2003 driver board.
 '''
 import Adafruit_BBIO.GPIO as GPIO
 import enum

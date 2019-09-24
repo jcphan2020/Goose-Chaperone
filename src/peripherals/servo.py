@@ -1,6 +1,5 @@
 '''
-Module providing functionality for initializing and manipulating
-a servo motor.
+Driver for initializing and utilizing a servo motor.
 
 NOTE: Relationship between duty cycle and servo angle can be fit on a line
 
