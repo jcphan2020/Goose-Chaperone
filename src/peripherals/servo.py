@@ -20,64 +20,65 @@ NOTE: Relationship between duty cycle and servo angle can be fit on a line
 import Adafruit_BBIO.PWM as PWM
 from shared import pins
 
-_g_PWM_FREQ = 50    # PWM frequency in HZ
-_g_MIN_ANGLE = 0    # Minimum servo rotation in degrees
-_g_MAX_ANGLE = 180  # Maximum servo rotation in degrees
 
-# TODO Tune these parameters
-_g_FULL_LEFT_DC = 2     # Duty cycle for minimum angle
-_g_FULL_RIGHT_DC = 10   # Duty cycle for maximum angle
-
-
-def init(ctrl_pin):
+class Servo(object):
     '''
-    Initializes specified pin for PWM control with servo
-
-    :param ctrl_pin: PWM pin to use for servo control
+    Structure for interacting with a servo motor over PWM
     '''
-    assert (ctrl_pin in pins.PWM_PINS), 'Given pin must be a PWM capable pin'
+    PWM_FREQ = 50    # PWM frequency in HZ
+    MIN_ANGLE = 0    # Minimum servo rotation in degrees
+    MAX_ANGLE = 180  # Maximum servo rotation in degrees
 
-    global _g_initialized
-    global _g_pwm_channel
-    global _g_conversion_factor
+    def __init__(self, ctrl_pin, full_left_dc, full_right_dc):
+        '''
+        Initializes specified pin for PWM control with servo. The full left
+        and full right duty cycle should be tuned for each individual servo
+        motor.
 
-    _g_initialized = False
+        :param ctrl_pin: PWM pin to use for servo control
+        :param full_left_dc: Duty cycle for servo's minimum angle
+        :param full_right_dc: Duty cycle for servo's maximum angle
+        '''
+        assert (ctrl_pin in pins.PWM_PINS), \
+            'Given pin must be a PWM capable pin'
+        assert (full_left_dc >= 0 and full_left_dc <= 100), \
+            'Duty cycle must be between 0 and 100'
+        assert (full_right_dc >= 0 and full_right_dc <= 100), \
+            'Duty cycle must be between 0 and 100'
 
-    # Configure pin for PWM
-    _g_pwm_channel = ctrl_pin
+        self.pwm_channel = ctrl_pin
+        self.full_left_dc = full_left_dc
+        self.full_right_dc = full_right_dc
 
-    PWM.start(channel=ctrl_pin,
-              duty_cycle=_g_FULL_LEFT_DC,
-              frequency=_g_PWM_FREQ)
+        # Configure PWM channel
+        PWM.start(channel=self.pwm_channel,
+                  duty_cycle=self.full_left_dc,
+                  frequency=Servo.PWM_FREQ)
 
-    # Determine conversion factor for calculating duty cycle
-    # Conversion factor = slope of line -> ((y2 - y1) / (x2 - x1))
-    _g_conversion_factor \
-        = (_g_FULL_RIGHT_DC - _g_FULL_LEFT_DC) / (_g_MAX_ANGLE - _g_MIN_ANGLE)
+        # Determine conversion factor for calculating duty cycle
+        # Conversion factor = slope of line -> ((y2 - y1) / (x2 - x1))
+        self.conversion_factor                          \
+            = (self.full_right_dc - self.full_left_dc)  \
+            / (Servo.MAX_ANGLE - Servo.MIN_ANGLE)
 
-    _g_initialized = True
+    def turn_to_angle(self, degree):
+        '''
+        Turns servo to face specified degree relative to LEFT most rotation
 
+        :param degree: Angle for servo to face (Clamped: MIN <= degree <= MAX)
+        '''
+        # Clamp angle between min/max
+        if degree < Servo.MIN_ANGLE:
+            norm_degree = Servo.MIN_ANGLE
 
-def turn_to_angle(degree):
-    '''
-    Turns servo to face specified degree relative to LEFT most rotation
+        elif degree > Servo.MAX_ANGLE:
+            norm_degree = Servo.MAX_ANGLE
 
-    :param degree: Angle for servo to face (MIN <= degree <= MAX)
-    '''
-    assert (_g_initialized), "Servo was not initialized"
+        else:
+            norm_degree = degree
 
-    # Clamp angle between min/max
-    if degree < _g_MIN_ANGLE:
-        norm_degree = _g_MIN_ANGLE
+        # Calculate necessary duty cycle to achieve angle
+        duty_cycle = (self.conversion_factor * norm_degree) \
+            + self.full_left_dc
 
-    elif degree > _g_MAX_ANGLE:
-        norm_degree = _g_MAX_ANGLE
-
-    else:
-        norm_degree = degree
-
-    # Calculate necessary duty cycle to achieve angle
-    duty_cycle = (_g_conversion_factor * norm_degree) + _g_FULL_LEFT_DC
-
-    # Adjust servo angle
-    PWM.set_duty_cycle(_g_pwm_channel, duty_cycle)
+        PWM.set_duty_cycle(self.pwm_channel, duty_cycle)
