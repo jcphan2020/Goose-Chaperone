@@ -29,6 +29,7 @@ class Stepper(object):
     '''
     STEPS_PER_REV = 4076.0  # Valid value for ULN2003 stepper motor driver
     DEFAULT_RPM = 15  # Valid value for ULN2003 stepper motor driver
+    DEG_PER_REV = 360.0  # Number of degrees in full revolution
 
     def __init__(self, pinA, pinB, pinC, pinD,
                  steps_per_rev=STEPS_PER_REV, full_step=True):
@@ -46,11 +47,14 @@ class Stepper(object):
         else:
             self._next_cmd = StepCmd.CMD_01H
 
-        # Number of steps in full revolution
+        # Number of full steps in full revolution
         self.steps_per_rev = steps_per_rev
 
-        # Degree change per step
-        self._steps_per_deg = self.steps_per_rev / 360.0
+        # Degree change per full step
+        self._deg_per_step = Stepper.DEG_PER_REV / self.steps_per_rev
+
+        # Full steps to change 1 degree
+        self._steps_per_deg = self.steps_per_rev / Stepper.DEG_PER_REV
 
         # Flag indicating whether half or full step should be utilized
         self.full_step = full_step
@@ -112,22 +116,23 @@ class Stepper(object):
         # Time between steps in seconds
         step_delay = 60.0 / (self.steps_per_rev * rpm)
 
-        # Number of steps to rotate (floor and convert to int)
-        steps = int(math.fabs(degrees * self._steps_per_deg))
+        # Number of full steps to rotate
+        steps = math.floor((math.fabs(degrees * self._steps_per_deg)))
 
-        # 'cmd_step' determines command sequence to send to board driver
-        # 'direction' is which way iteration through commands is happening
-        # Changing 'direction' changes which way stepper motor rotates
-        cmd_step = 2
-        direction = 1
+        cmd_step = 2  # Determines command sequence to send to board driver
+        direction = 1  # Command iteration direction === stepper direction
+        angle_delta = self._deg_per_step  # Amt stepper angle changes per step
 
         if not self.full_step:
             cmd_step = 1
-            step_delay /= 2  # Twice the steps means half the delay
+            steps *= 2  # Half steps result in twice the total steps
+            angle_delta /= 2.0  # Half step means half the angle change
+            step_delay /= 2.0  # Twice the steps means half the delay
 
         if degrees < 0:
             direction = -1
             cmd_step *= direction
+            angle_delta *= direction
 
         # Begin rotation
         for step in range(steps):
@@ -138,7 +143,8 @@ class Stepper(object):
             # Determine next command to send
             self._next_cmd = (self._next_cmd + cmd_step) % StepCmd.NUM_CMD
 
-            # TODO Track stepper's angle
+            # Modify stepper's angle
+            self.angle = (self.angle + angle_delta) % Stepper.DEG_PER_REV
 
         # Set pins to low to hold the stepper's angle
         self.__reset_pins()
@@ -147,4 +153,5 @@ class Stepper(object):
 if __name__ == "__main__":
     stepper = Stepper('a', 'b', 'c', 'd')
     # stepper = Stepper('a', 'b', 'c', 'd', full_step=False)
-    stepper.rotate(1)
+    stepper.rotate(25)
+    print('Final Angle: %.4f' % stepper.angle)
