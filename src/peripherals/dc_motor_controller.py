@@ -1,6 +1,4 @@
-'''
-Controller for manipulating system's two DC motors.
-'''
+'''Controller for manipulating system's two DC motors.'''
 import Adafruit_BBIO.GPIO as GPIO
 import dc_motor as dcm
 import enum
@@ -25,9 +23,7 @@ _g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
 
 @enum.unique
 class TurnDirectionEnum(enum.Enum):
-    '''
-    Enumeration for valid turn directions
-    '''
+    '''Enumeration for valid turn directions'''
     RIGHT = enum.auto()
     LEFT = enum.auto()
 
@@ -90,9 +86,7 @@ def set_speed(speed_setting, direction):
 
 
 def stop():
-    '''
-    Method for bringing DC motors to a stop
-    '''
+    '''Method for bringing DC motors to a stop'''
     set_speed(dcm.MotorSpeedEnum.STOP)
 
 

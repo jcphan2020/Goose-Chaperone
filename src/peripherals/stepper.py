@@ -1,6 +1,4 @@
-'''
-Driver for interacting with stepper motor via ULN2003 driver board.
-'''
+'''Driver for interacting with stepper motor via ULN2003 driver board.'''
 import Adafruit_BBIO.GPIO as GPIO
 import enum
 import math
@@ -9,9 +7,7 @@ import time
 
 @enum.unique
 class StepCmd(enum.IntEnum):
-    '''
-    All possible states in step command 'FSM'
-    '''
+    '''All possible states in step command 'FSM'''
     CMD_01H = 0
     CMD_03H = 1
     CMD_02H = 2
@@ -24,9 +20,7 @@ class StepCmd(enum.IntEnum):
 
 
 class Stepper(object):
-    '''
-    Structure providing various methods for utilizing stepper via ULN2003
-    '''
+    '''Structure providing various methods for utilizing stepper via ULN2003'''
     STEPS_PER_REV = 4076.0  # Valid value for ULN2003 stepper motor driver
     DEFAULT_RPM = 15  # Valid value for ULN2003 stepper motor driver
     DEG_PER_REV = 360.0  # Number of degrees in full revolution
@@ -89,13 +83,15 @@ class Stepper(object):
         }
 
     def __reset_pins(self):
-        '''
-        '''
+        '''Sets all pins low'''
         for pin in self.pins:
             GPIO.output(pin, GPIO.LOW)
 
     def __send_cmd(self, cmd):
         '''
+        Sends the specified command to the motor via GPIO pin levels
+
+        :param cmd: Command to send
         '''
         try:
             high_pins = self._cmd_mapping_high[cmd]
@@ -112,6 +108,10 @@ class Stepper(object):
 
     def rotate(self, degrees, rpm=DEFAULT_RPM):
         '''
+        Turns the stepper motor by the specified degrees
+
+        :param degrees: Angle, in degrees, to turn
+        :param rpm: How fast to turn the motor
         '''
         # Time between steps in seconds
         step_delay = 60.0 / (self.steps_per_rev * rpm)

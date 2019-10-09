@@ -1,6 +1,4 @@
-'''
-Driver for initializing and utilizing a DC motor.
-'''
+'''Driver for initializing and utilizing a DC motor.'''
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import enum
@@ -9,9 +7,7 @@ _g_SPD_DIR_VALUES = [0, 1, None]    # Valid values for speed direction
 
 
 class MotorSpeedEnum(enum.Enum):
-    '''
-    Enumeration for all valid speed settings
-    '''
+    '''Enumeration for all valid speed settings'''
     STOP = enum.auto()
     SLOW = enum.auto()
     PATROL = enum.auto()
@@ -45,7 +41,7 @@ class DCMotor(object):
 
     def set_speed(self, speed_setting, direction=None):
         '''
-        Sets the motor speed
+        Sets the motor speed for the motor
 
         :param speed_setting: Speed setting to set motor to
         :param direction: Motor direction

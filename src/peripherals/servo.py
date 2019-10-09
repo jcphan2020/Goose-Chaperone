@@ -1,6 +1,5 @@
 '''
 Driver for initializing and utilizing a servo motor.
-
 NOTE: Relationship between duty cycle and servo angle can be fit on a line
 
     Duty Cycle (%)
@@ -21,9 +20,7 @@ from shared import pins
 
 
 class Servo(object):
-    '''
-    Structure for interacting with a servo motor over PWM
-    '''
+    '''Structure for interacting with a servo motor over PWM'''
     PWM_FREQ = 50    # PWM frequency in HZ
     MIN_ANGLE = 0    # Minimum servo rotation in degrees
     MAX_ANGLE = 180  # Maximum servo rotation in degrees
