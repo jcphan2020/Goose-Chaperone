@@ -1,0 +1,11 @@
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\bin\Debug\netcoreapp2.1\ImageScraper.deps.json
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\bin\Debug\netcoreapp2.1\ImageScraper.runtimeconfig.json
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\bin\Debug\netcoreapp2.1\ImageScraper.runtimeconfig.dev.json
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\bin\Debug\netcoreapp2.1\ImageScraper.dll
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.csproj.CoreCompileInputs.cache
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.AssemblyInfoInputs.cache
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.AssemblyInfo.cs
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.csprojAssemblyReference.cache
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\bin\Debug\netcoreapp2.1\ImageScraper.pdb
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.dll
+C:\Users\MMI\source\repos\ImageScraper\ImageScraper\obj\Debug\netcoreapp2.1\ImageScraper.pdb

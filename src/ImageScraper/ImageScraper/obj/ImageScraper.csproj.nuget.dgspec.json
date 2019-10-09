@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj": {}
+  },
+  "projects": {
+    "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
+        "projectName": "ImageScraper",
+        "projectPath": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
+        "packagesPath": "C:\\Users\\MMI\\.nuget\\packages\\",
+        "outputPath": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\MMI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Google.Apis": {
+              "target": "Package",
+              "version": "[1.41.1, )"
+            },
+            "Google.Apis.Customsearch.v1": {
+              "target": "Package",
+              "version": "[1.41.1.1369, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
