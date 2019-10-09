@@ -41,7 +41,8 @@ def single_capture():
 
 def batch_capture(num):
     '''
-    Captures a series of frames with fixed delay between each frame
+    Captures a series of frames with fixed delay between each frame. If an
+    invalid frame is encountered in will be thrown away with no retry.
 
     :param num: Maximum number of frames to capture
     :returns: List of valid frames captured
