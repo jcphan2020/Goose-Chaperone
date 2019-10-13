@@ -77,8 +77,8 @@ if __name__ == "__main__":
   model_file = \
     "tensorflow/examples/label_image/data/inception_v3_2016_08_28_frozen.pb"
   label_file = "tensorflow/examples/label_image/data/imagenet_slim_labels.txt"
-  input_height = 299
-  input_width = 299
+  input_height = 480
+  input_width = 270
   input_mean = 0
   input_std = 255
   input_layer = "input"
