@@ -3837,11 +3837,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
+      "projectUniqueName": "E:\\Dev\\class\\492\\new_clone\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
       "projectName": "ImageScraper",
-      "projectPath": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
+      "projectPath": "E:\\Dev\\class\\492\\new_clone\\sddec19-17\\src\\ImageScraper\\ImageScraper\\ImageScraper.csproj",
       "packagesPath": "C:\\Users\\MMI\\.nuget\\packages\\",
-      "outputPath": "E:\\Dev\\class\\492\\dev\\sddec19-17\\src\\ImageScraper\\ImageScraper\\obj\\",
+      "outputPath": "E:\\Dev\\class\\492\\new_clone\\sddec19-17\\src\\ImageScraper\\ImageScraper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
