@@ -12,7 +12,7 @@ REM Values to change************
 SET /A inputWidth=480
 SET /A inputHeight=270
 SET /A epochs=1000
-SET trainSrc=./images_scaled/training
+SET trainSrc=./images_scaled/images/training
 SET modelName=tmodel
 SET distortions=--random_crop 7 --random_scale 5 --random_brightness 10
 SET srcModel=https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/feature_vector/3
