@@ -58,10 +58,10 @@ with tf.Session() as sess:
             y = bbox[0] * rows
             right = bbox[3] * cols
             bottom = bbox[2] * rows
-            cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
+            cv2.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
 
-cv.imshow('TensorFlow MobileNet-SSD', img)
-cv.waitKey()
+cv2.imshow('TensorFlow MobileNet-SSD', img)
+cv2.waitKey()
 
 """
 keep_alive = True
