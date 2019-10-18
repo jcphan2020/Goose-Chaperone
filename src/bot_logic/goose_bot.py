@@ -1,6 +1,17 @@
 import argparse as ap
 
 import constant
+from position import Location
+
+#Config variables
+
+DevMode=False
+ForceRealtimeCamera=False
+IdleCaptureRate=2
+EnableLogging=False
+LocBuffer=30
+
+loc = None
 
 def init_cli_options():
     #Define Command Line Arguments
@@ -29,11 +40,31 @@ def init_cli_options():
         default=False,
         help='Create and append log files')
 
-    arg_parse.parse_args()
+    arg_parse.add_argument(
+        '--pos_buffer',
+        type=int,
+        default=30,
+        help='GPS coordinate buffer capacity')
 
+    args = arg_parse.parse_args()
+    DevMode=args.dev_mode
+    ForceRealtimeCamera=args.force_realtime_camera
+    IdleCaptureRate=args.capture_rate
+    EnableLogging=args.logging
+    LocBuffer=args.pos_buffer
+
+    global loc
+    loc = Location(LocBuffer, test)
+    print (loc)
+    print(args)
+    print("CLI")
+
+def test():#Placeholder for GPS data gathering function, replace.
+    print ("Weeee")
 
 def init_system():
     init_cli_options()
+    loc.start()
     print("Bot Init")
 
 if __name__ == "__main__":
