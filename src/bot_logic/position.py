@@ -10,8 +10,10 @@ class Location (threading.Thread):
 
     BufferSize = 30#Default buffer size
     LocBuffer = []#Empty location distrobution buffer
-    _gps_lambda = ()#GPS method for collecting data
+
     gps_thread=None
+    _gps_lambda = ()#GPS method for collecting data
+    _bufferIndex = 0
 
     def __init__(self, bufferSize, gps):
         self.BufferSize = bufferSize
@@ -19,7 +21,24 @@ class Location (threading.Thread):
         self._gps_lambda = gps
         threading.Thread.__init__(self)
 
+    #Start GPS monitoring
     def start(self):
         gps_thread = threading.Thread(target=self._gps_lambda)
         gps_thread.start()
+
+    #Add next GPS coordinate to queue, determine precise average location
+    def addGpsCoord(self, X, Y):
+        print(X,Y)
+        self._bufferIndex += 1
+        if (self._bufferIndex == self.BufferSize):
+            self._bufferIndex = 0
+
+    #Use GPS Buffer to determine direction if moving
+    def updateBearing(self):
+        print("Update Bearing")
+
+    
+
+    #def pause(self): Figure out a semaphore solution
+    #    gps_thread.
 
