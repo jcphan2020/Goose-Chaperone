@@ -28,11 +28,12 @@ REFV_33_PINS = ['P9_3', 'P9_4']
 
 # Reference voltage pins (5V)
 # Max Current: 1000 mA
-# **NOTE**  Only work when DC power jack connected
+# **NOTE**  5V power rail provided by DC power jack
 REFV_5_PINS = ['P9_5', 'P9_6']
 
 # System voltage pins (5V)
 # Max Current: 250 mA
+# **NOTE**  5V power rail provided by USB connection
 SYSV_PINS = ['P9_7', 'P9_8']
 
 # System reset pin
