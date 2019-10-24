@@ -4,30 +4,32 @@
 #       maniputlated/analyzed with various OpenCV functions.
 import cv2
 
-CAPTURE_DELAY_MS = 10  # How long to delay between batch captures
-CAPTURE_DEVICE_INDEX = 0  # Only one camera on system so '0' index
-INIT_FRAMES = 5  # Number of throwaway frames to initialize camera
+_g_CAPTURE_DEVICE_INDEX = 0  # Only one camera on system so '0' index
+_g_INIT_FRAMES = 5  # Number of throwaway frames to initialize camera
 
 
-def init():
+def init(cap_delay):
     '''Creates handle and initializes capture capture device'''
-    global vcap
+    global _g_vcap  # Handle for capture device
+    global _g_cap_delay_ms  # Delay between batch captures in ms
 
     # Create the object for capturing frames
-    vcap = cv2.VideoCapture(CAPTURE_DEVICE_INDEX)
-    if not vcap.isOpened():
+    _g_vcap = cv2.VideoCapture(_g_CAPTURE_DEVICE_INDEX)
+    if not _g_vcap.isOpened():
         raise RuntimeError('Unable to connect to camera.')
+
+    _g_cap_delay_ms = cap_delay
 
     # Set device properties here if necessary (i.e. frame width/height)
     # Initialize device by capturing dummy frames
-    for i in range(INIT_FRAMES):
-        vcap.read()
-        cv2.waitKey(CAPTURE_DELAY_MS)  # Delay
+    for i in range(_g_INIT_FRAMES):
+        _g_vcap.read()
+        cv2.waitKey(_g_cap_delay_ms)  # Delay
 
 
 def release():
     '''Releases the handle on the capture device'''
-    vcap.release()
+    _g_vcap.release()
 
 
 def single_capture():
@@ -36,7 +38,7 @@ def single_capture():
 
     :returns: True if frame read correctly along with corresponding frame
     '''
-    return vcap.read()
+    return _g_vcap.read()
 
 
 def batch_capture(num):
@@ -56,6 +58,6 @@ def batch_capture(num):
             if success:
                 frame_list.append(frame)
 
-            cv2.waitKey(CAPTURE_DELAY_MS)  # Delay
+            cv2.waitKey(_g_cap_delay_ms)  # Delay
 
     return frame_list
