@@ -16,7 +16,9 @@ class MotorSpeedEnum(enum.Enum):
 
 
 class DCMotor(object):
-    _PWM_FREQ = 2000  # PWM frequency in HZ
+    # PWM frequency in HZ
+    # Max PWM freq for DRV8835 Motor Driver = 250 Hz
+    _PWM_FREQ_HZ = 100
 
     def __init__(self, channel, select, dcycle_map):
         '''
@@ -34,7 +36,7 @@ class DCMotor(object):
         # Configure PWM channel with initial duty cycle of 0
         PWM.start(channel=self.channel,
                   duty_cycle=0,
-                  frequency=DCMotor._PWM_FREQ)
+                  frequency=DCMotor._PWM_FREQ_HZ)
 
         # Configure GPIO pin controlling motor direction
         GPIO.setup(self.select, GPIO.OUT)
