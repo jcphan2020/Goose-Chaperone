@@ -80,14 +80,6 @@ def init_system():
         # Retrieve command line arguments
         init_cli_options()
 
-        # Wait for the 'Reset' pin to be driven high before proceeding
-        res = GPIO.wait_for_edge(pins.SYSR_PIN, GPIO.RISING,
-                                 constant.SYSTEM_RESET_TIMEOUT_MS)
-
-        if res is None or res == -1:
-            raise RuntimeError('Fatal Error: System Reset pin was not driven'
-                               '  high within specified timeout.')
-
         # Initialize peripherals
         # loc.start()
 
