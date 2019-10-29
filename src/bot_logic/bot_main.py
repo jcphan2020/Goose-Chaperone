@@ -106,8 +106,9 @@ def init_system():
     except Exception:
         raise
     finally:
-        # Turn off the 'running' LED
+        # Cleanup
         GPIO.output(constant.RUNNING_LED_PIN, GPIO.HIGH)
+        GPIO.cleanup()
 
     print("Bot Init")
 
