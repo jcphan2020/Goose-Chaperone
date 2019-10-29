@@ -1,5 +1,7 @@
-import argparse as ap
 import Adafruit_BBIO.GPIO as GPIO
+import Adafruit_BBIO.PWM as PWM
+import Adafruit_BBIO.UART as UART
+import argparse as ap
 import cmd_listener
 import constant
 # from peripherals import camera
@@ -101,6 +103,8 @@ def init_system():
         # Cleanup
         GPIO.output(constant.RUNNING_LED_PIN, GPIO.LOW)
         GPIO.cleanup()
+        PWM.cleanup()
+        UART.cleanup()
 
     print("Bot Init")
 
