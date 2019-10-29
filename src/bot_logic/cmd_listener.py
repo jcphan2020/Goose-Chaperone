@@ -4,7 +4,7 @@ from shared import command
 import socket
 
 _g_BIND_ADDR = ''
-_g_PORT = '13131'
+_g_PORT = 13131
 _g_RECV_BUF_SIZE = 1024  # Max size of received data in bytes
 
 
