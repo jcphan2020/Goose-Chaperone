@@ -1,8 +1,8 @@
 '''Controller for manipulating system's two DC motors.'''
 import Adafruit_BBIO.GPIO as GPIO
-import dc_motor as dcm
+from . import dc_motor as dcm
 import enum
-from shared import pins
+from ..shared import pins
 import time
 
 _g_L_MOTOR_INDEX = 0        # Index of left motor in motor list
