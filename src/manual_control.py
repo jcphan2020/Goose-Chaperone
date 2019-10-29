@@ -9,7 +9,8 @@ _g_BOT_PORT = 13131
 
 def run():
     running = True
-    movement_speed = 1  # MotorSpeedEnum.SLOW
+    movement_speed = 0  # MotorSpeedEnum.STOP
+    top_speed = 3  # MotorSpeedEnum.FAST
 
     bot_addr = (_g_BOT_ADDR, _g_BOT_PORT)
     opt_value = 1  # Set the socket options
@@ -46,6 +47,16 @@ def run():
             # Turn right
             cmd = command.Turn.pack(1, 15)  # 1 == TurnDirectionEnum.RIGHT
             sock.sendto(cmd, bot_addr)
+
+        elif key == 'r':
+            # Increase speed
+            if movement_speed < top_speed:
+                movement_speed += 1
+
+        elif key == 'f':
+            # Decrease speed
+            if movement_speed > 0:
+                movement_speed -= 1
 
         else:
             pass
