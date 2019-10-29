@@ -54,4 +54,5 @@ def parse_cmd_type(byte_data):
     cmd_type_bytes = byte_data[:_g_CMD_TYPE_LEN]
     fmt = _g_NET_FMT + _g_CMD_TYPE_FMT
 
-    return struct.unpack(fmt, cmd_type_bytes)
+    cmd_type, = struct.unpack(fmt, cmd_type_bytes)
+    return cmd_type
