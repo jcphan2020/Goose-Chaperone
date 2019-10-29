@@ -107,7 +107,7 @@ def init_system():
         raise
     finally:
         # Cleanup
-        GPIO.output(constant.RUNNING_LED_PIN, GPIO.HIGH)
+        GPIO.output(constant.RUNNING_LED_PIN, GPIO.LOW)
         GPIO.cleanup()
 
     print("Bot Init")
