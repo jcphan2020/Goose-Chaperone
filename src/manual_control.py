@@ -14,11 +14,11 @@ def run():
     bot_addr = (_g_BOT_ADDR, _g_BOT_PORT)
     opt_value = 1  # Set the socket options
 
-    # Initialize client socket with appropriate options
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # UDP
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, opt_value)
-
     while running:
+        # Client socket with appropriate options
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # UDP
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, opt_value)
+
         key = msvcrt.getch().decode()
 
         if key == 'q':
@@ -49,6 +49,8 @@ def run():
 
         else:
             pass
+
+        sock.close()
 
 
 if __name__ == '__main__':
