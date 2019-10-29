@@ -1,4 +1,4 @@
-'''Allows for manual control of the bot'''
+'''Allows for manual control of the bot over Ethernet'''
 from peripherals import dc_motor_controller as dcmc
 from shared import command
 import socket
