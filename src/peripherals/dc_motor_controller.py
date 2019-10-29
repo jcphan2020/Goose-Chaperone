@@ -64,7 +64,7 @@ def init(l_channel, l_select, r_channel, r_select, mode_sel):
     _g_initialized = True
 
 
-def set_speed(speed_setting, direction):
+def set_speed(speed_setting, direction=None):
     '''
     Sets the base speed for DC motors
 
