@@ -24,8 +24,8 @@ _g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
 @enum.unique
 class TurnDirectionEnum(enum.Enum):
     '''Enumeration for valid turn directions'''
-    RIGHT = enum.auto()
-    LEFT = enum.auto()
+    LEFT = 0
+    RIGHT = 1
 
 
 def init(l_channel, l_select, r_channel, r_select, mode_sel):

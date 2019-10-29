@@ -6,13 +6,14 @@ import enum
 _g_SPD_DIR_VALUES = [0, 1, None]    # Valid values for speed direction
 
 
+@enum.unique
 class MotorSpeedEnum(enum.Enum):
     '''Enumeration for all valid speed settings'''
-    STOP = enum.auto()
-    SLOW = enum.auto()
-    PATROL = enum.auto()
-    FAST = enum.auto()
-    TURN = enum.auto()
+    STOP = 0
+    SLOW = 1
+    PATROL = 2
+    FAST = 3
+    TURN = 4
 
 
 class DCMotor(object):
