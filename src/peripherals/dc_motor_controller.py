@@ -2,7 +2,7 @@
 import Adafruit_BBIO.GPIO as GPIO
 from . import dc_motor as dcm
 import enum
-from ..shared import pins
+from shared import pins
 import time
 
 _g_L_MOTOR_INDEX = 0        # Index of left motor in motor list

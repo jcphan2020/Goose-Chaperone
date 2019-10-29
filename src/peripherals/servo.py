@@ -16,7 +16,7 @@ NOTE: Relationship between duty cycle and servo angle can be fit on a line
         y - y1 = m(x - x1)      where m = (y2 - y1) / (x2 - x1)
 '''
 import Adafruit_BBIO.PWM as PWM
-from ..shared import pins
+from shared import pins
 
 
 class Servo(object):
