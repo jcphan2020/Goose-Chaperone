@@ -3,12 +3,11 @@ import Adafruit_BBIO.PWM as PWM
 import Adafruit_BBIO.UART as UART
 import argparse as ap
 import cmd_listener
-import constant
 # from peripherals import camera
 from peripherals import dc_motor_controller as dcmc
 from peripherals import stepper
 from position import Location
-from shared import pins
+from shared import constants
 
 # Config variables
 DevMode = False
@@ -75,8 +74,8 @@ def init_system():
     global g_panning_stepper
 
     # Turn on LED indicating that the system is running
-    GPIO.setup(constant.RUNNING_LED_PIN, GPIO.OUT)
-    GPIO.output(constant.RUNNING_LED_PIN, GPIO.HIGH)
+    GPIO.setup(constants.RUNNING_LED_PIN, GPIO.OUT)
+    GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
 
     try:
         # Retrieve command line arguments
@@ -85,23 +84,23 @@ def init_system():
         # Initialize peripherals
         # loc.start()
 
-        dcmc.init(constant.L_MOTOR_PWM_PIN, constant.L_MOTOR_SEL_PIN,
-                  constant.R_MOTOR_PWM_PIN, constant.R_MOTOR_SEL_PIN,
-                  constant.MOTOR_DRIVER_MODE_PIN)
+        dcmc.init(constants.L_MOTOR_PWM_PIN, constants.L_MOTOR_SEL_PIN,
+                  constants.R_MOTOR_PWM_PIN, constants.R_MOTOR_SEL_PIN,
+                  constants.MOTOR_DRIVER_MODE_PIN)
 
-        # camera.init(constant.CAM_CAP_DELAY_MS)
+        # camera.init(constants.CAM_CAP_DELAY_MS)
 
-        # g_panning_stepper = stepper.Stepper(constant.PAN_STEPPER_AIN_PIN,
-        #                                      constant.PAN_STEPPER_BIN_PIN,
-        #                                      constant.PAN_STEPPER_CIN_PIN,
-        #                                      constant.PAN_STEPPER_DIN_PIN)
+        # g_panning_stepper = stepper.Stepper(constants.PAN_STEPPER_AIN_PIN,
+        #                                      constants.PAN_STEPPER_BIN_PIN,
+        #                                      constants.PAN_STEPPER_CIN_PIN,
+        #                                      constants.PAN_STEPPER_DIN_PIN)
 
         cmd_listener.start()
     except Exception:
         raise
     finally:
         # Cleanup
-        GPIO.output(constant.RUNNING_LED_PIN, GPIO.LOW)
+        GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
         GPIO.cleanup()
         PWM.cleanup()
         UART.cleanup()
