@@ -76,13 +76,13 @@ def set_speed(speed_setting, direction=None):
     assert (_g_initialized), "DC Motors were not initialized"
 
     try:
-        dcm.MotorSpeedEnum(speed_setting)
+        speed = dcm.MotorSpeedEnum(speed_setting)
     except ValueError:
         raise AssertionError('Invalid motor speed setting')
 
     # Set both motors to the same speed and direction
     for motor in _g_motors:
-        motor.set_speed(speed_setting, direction)
+        motor.set_speed(speed, direction)
 
 
 def stop():
