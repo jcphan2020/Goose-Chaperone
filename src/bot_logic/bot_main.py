@@ -1,9 +1,8 @@
 import argparse as ap
 import Adafruit_BBIO.GPIO as GPIO
-
 import cmd_listener
 import constant
-from peripherals import camera
+# from peripherals import camera
 from peripherals import dc_motor_controller as dcmc
 from peripherals import stepper
 from position import Location
@@ -73,32 +72,43 @@ def test():  # Placeholder for GPS data gathering function, replace.
 def init_system():
     global g_panning_stepper
 
-    # Retrieve command line arguments
-    init_cli_options()
+    # Turn on LED indicating that the system is running
+    GPIO.setup(constant.RUNNING_LED_PIN, GPIO.OUT)
+    GPIO.output(constant.RUNNING_LED_PIN, GPIO.HIGH)
 
-    # Wait for the 'Reset' pin to be driven high before proceeding
-    res = GPIO.wait_for_edge(pins.SYSR_PIN, GPIO.RISING,
-                             timeout=constant.SYSTEM_RESET_TIMEOUT_MS)
+    try:
+        # Retrieve command line arguments
+        init_cli_options()
 
-    if res == -1:
-        raise RuntimeError('Fatal Error: System Reset pin was not driven'
-                           '  high within specified timeout.')
+        # Wait for the 'Reset' pin to be driven high before proceeding
+        res = GPIO.wait_for_edge(pins.SYSR_PIN, GPIO.RISING,
+                                 constant.SYSTEM_RESET_TIMEOUT_MS)
 
-    # Initialize peripherals
-    # loc.start()
+        if res is None or res == -1:
+            raise RuntimeError('Fatal Error: System Reset pin was not driven'
+                               '  high within specified timeout.')
 
-    dcmc.init(constant.L_MOTOR_PWM_PIN, constant.L_MOTOR_SEL_PIN,
-              constant.R_MOTOR_PWM_PIN, constant.R_MOTOR_SEL_PIN,
-              constant.MOTOR_DRIVER_MODE_PIN)
+        # Initialize peripherals
+        # loc.start()
 
-    # camera.init(constant.CAM_CAP_DELAY_MS)
+        dcmc.init(constant.L_MOTOR_PWM_PIN, constant.L_MOTOR_SEL_PIN,
+                  constant.R_MOTOR_PWM_PIN, constant.R_MOTOR_SEL_PIN,
+                  constant.MOTOR_DRIVER_MODE_PIN)
 
-    # g_panning_stepper = stepper.Stepper(constant.PAN_STEPPER_AIN_PIN,
-    #                                      constant.PAN_STEPPER_BIN_PIN,
-    #                                      constant.PAN_STEPPER_CIN_PIN,
-    #                                      constant.PAN_STEPPER_DIN_PIN)
+        # camera.init(constant.CAM_CAP_DELAY_MS)
 
-    cmd_listener.start()
+        # g_panning_stepper = stepper.Stepper(constant.PAN_STEPPER_AIN_PIN,
+        #                                      constant.PAN_STEPPER_BIN_PIN,
+        #                                      constant.PAN_STEPPER_CIN_PIN,
+        #                                      constant.PAN_STEPPER_DIN_PIN)
+
+        cmd_listener.start()
+    except Exception:
+        raise
+    finally:
+        # Turn off the 'running' LED
+        GPIO.output(constant.RUNNING_LED_PIN, GPIO.HIGH)
+
     print("Bot Init")
 
 

@@ -6,6 +6,7 @@ from shared import pins
 
 # Configurations for pinouts
 ALERT_LED_PIN = 1  # Example, if we want to have an LED status light
+RUNNING_LED_PIN = 'USR1'  # LED indicating the system is up and running
 
 L_MOTOR_PWM_PIN = pins.PWM2B  # DC Motor pinout
 L_MOTOR_SEL_PIN = 'P8_14'
