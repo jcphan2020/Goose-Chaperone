@@ -32,31 +32,35 @@ def start():
             # Act
             if cmd_type == command.MOVE_CMD:
                 direction, speed = command.Move.unpack(cmd_bytes)
-                dcmc.set_speed(speed, direction)
 
                 if direction == 0:
                     dir_str = 'forward'
                 else:
                     dir_str = 'reverse'
-                print('Moving %s at speed setting: %d' % (dir_str, speed))
+
+                print('Move Req: \'%s\' at speed setting \'%d\'' % (dir_str,
+                                                                    speed))
+                dcmc.set_speed(speed, direction)
 
             elif cmd_type == command.TURN_CMD:
                 direction, degrees = command.Turn.unpack(cmd_bytes)
-                dcmc.turn(degrees, dcmc.TurnDirectionEnum(direction))
 
                 if direction == 0:
                     dir_str = 'left'
                 else:
                     dir_str = 'right'
-                print('Turning %s %d degrees' % (dir_str, degrees))
+
+                print('Turn Req: %s %d degrees' % (dir_str, degrees))
+
+                dcmc.turn(degrees, dcmc.TurnDirectionEnum(direction))
 
             elif cmd_type == command.EXIT_CMD:
                 running = False
-                print('Exiting...')
+                print('Exit Req')
 
             else:
                 # Invalid command
-                print('Invalid command thrown out')
+                print('Invalid command received')
 
     # Cleanup
     server.close()

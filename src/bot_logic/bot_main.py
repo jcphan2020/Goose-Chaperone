@@ -105,8 +105,6 @@ def init_system():
         GPIO.cleanup()
         PWM.cleanup()
 
-    print("Bot Init")
-
 
 if __name__ == "__main__":
     print("Starting Bot")

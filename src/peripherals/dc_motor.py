@@ -69,9 +69,11 @@ class DCMotor(object):
 
         # Track active speed setting
         self.speed_setting = speed_setting
+        print('Set PWM \'%s\' duty cycle: %d%%' % (self.channel, dcycle))
 
     def cleanup(self):
         '''
         Stops PWM channel
         '''
         PWM.stop(self.channel)
+        print('DC Motor shutdown')

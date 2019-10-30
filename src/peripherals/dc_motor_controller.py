@@ -72,6 +72,8 @@ def cleanup():
     for motor in _g_motors:
         motor.cleanup()
 
+    print('DC Motor Controller shutdown')
+
 
 def set_speed(speed_setting, direction=None):
     '''
