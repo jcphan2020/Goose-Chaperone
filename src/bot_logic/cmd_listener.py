@@ -38,8 +38,8 @@ def start():
                 else:
                     dir_str = 'reverse'
 
-                print('Move Req: \'%s\' at speed setting \'%d\'' % (dir_str,
-                                                                    speed))
+                print('--Move Req: \'%s\' at speed setting \'%d\'' % (dir_str,
+                                                                      speed))
                 dcmc.set_speed(speed, direction)
 
             elif cmd_type == command.TURN_CMD:
@@ -50,13 +50,13 @@ def start():
                 else:
                     dir_str = 'right'
 
-                print('Turn Req: %s %d degrees' % (dir_str, degrees))
+                print('--Turn Req: %s %d degrees' % (dir_str, degrees))
 
                 dcmc.turn(degrees, dcmc.TurnDirectionEnum(direction))
 
             elif cmd_type == command.EXIT_CMD:
                 running = False
-                print('Exit Req')
+                print('--Exit Req')
 
             else:
                 # Invalid command
