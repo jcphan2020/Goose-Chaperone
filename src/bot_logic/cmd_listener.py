@@ -57,11 +57,11 @@ def start():
 
             elif cmd_type == command.EXIT_CMD:
                 running = False
-                print('--Exit Req')
+                print('--Exit Req--')
 
             else:
                 # Invalid command
-                print('Invalid command received')
+                print('--Invalid command received--')
 
     # Cleanup
     server.close()
