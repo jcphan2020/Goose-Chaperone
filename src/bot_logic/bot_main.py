@@ -101,9 +101,9 @@ def init_system():
     finally:
         # Cleanup
         GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
+        dcmc.cleanup()
         GPIO.cleanup()
         PWM.cleanup()
-        UART.cleanup()
 
     print("Bot Init")
 
