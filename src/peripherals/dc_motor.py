@@ -18,8 +18,8 @@ class MotorSpeedEnum(enum.Enum):
 
 class DCMotor(object):
     # PWM frequency in HZ
-    # Max PWM freq for DRV8835 Motor Driver = 250 Hz
-    _PWM_FREQ_HZ = 100
+    # Max PWM freq for DRV8835 Motor Driver = 250 kHz
+    _PWM_FREQ_HZ = 10000
 
     def __init__(self, channel, select, dcycle_map):
         '''
