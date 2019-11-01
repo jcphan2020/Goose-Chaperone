@@ -62,6 +62,17 @@ def init(l_channel, l_select, r_channel, r_select, mode_sel):
     GPIO.output(mode_sel, _g_DRIVER_MODE_PHASE_ENABLE)
 
     _g_initialized = True
+    print('DC Motor Controller Initialized')
+
+
+def cleanup():
+    '''
+    Shutsdown the DC motor contol
+    '''
+    for motor in _g_motors:
+        motor.cleanup()
+
+    print('DC Motor Controller shutdown')
 
 
 def set_speed(speed_setting, direction=None):

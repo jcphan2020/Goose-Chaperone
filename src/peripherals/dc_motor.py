@@ -42,6 +42,9 @@ class DCMotor(object):
         # Configure GPIO pin controlling motor direction
         GPIO.setup(self.select, GPIO.OUT)
 
+        print('DC Motor Initialized - PWM: %s  SEL: %s' % (self.channel,
+                                                           self.select))
+
     def set_speed(self, speed_setting, direction=None):
         '''
         Sets the motor speed for the motor
@@ -66,3 +69,11 @@ class DCMotor(object):
 
         # Track active speed setting
         self.speed_setting = speed_setting
+        print('Set PWM \'%s\' duty cycle: %d%%' % (self.channel, dcycle))
+
+    def cleanup(self):
+        '''
+        Stops PWM channel
+        '''
+        PWM.stop(self.channel)
+        print('DC Motor shutdown')
