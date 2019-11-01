@@ -44,6 +44,7 @@ def init(l_channel, l_select, r_channel, r_select, mode_sel):
 
     global _g_initialized
     global _g_motors
+    global _g_mode_sel
 
     _g_initialized = False
     _g_motors = [None, None]
@@ -58,8 +59,9 @@ def init(l_channel, l_select, r_channel, r_select, mode_sel):
                                               _g_R_DCYCLES)
 
     # Set the DRV8835 mode to PHASE/ENABLE for simplest usage
-    GPIO.setup(mode_sel, GPIO.OUT)
-    GPIO.output(mode_sel, _g_DRIVER_MODE_PHASE_ENABLE)
+    _g_mode_sel = mode_sel
+    GPIO.setup(_g_mode_sel, GPIO.OUT)
+    GPIO.output(_g_mode_sel, _g_DRIVER_MODE_PHASE_ENABLE)
 
     _g_initialized = True
     print('DC Motor Controller Initialized')
@@ -72,6 +74,7 @@ def cleanup():
     for motor in _g_motors:
         motor.cleanup()
 
+    GPIO.output(_g_mode_sel, GPIO.LOW)
     print('DC Motor Controller shutdown')
 
 

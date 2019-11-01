@@ -76,4 +76,5 @@ class DCMotor(object):
         Stops PWM channel
         '''
         PWM.stop(self.channel)
+        GPIO.output(self.select, GPIO.LOW)
         print('DC Motor shutdown')
