@@ -150,8 +150,30 @@ class Stepper(object):
         self.__reset_pins()
 
 
+def init(pinA, pinB, pinC, pinD, steps_per_rev=Stepper.STEPS_PER_REV,
+         full_step=True):
+    '''
+    Initializes stepper motor control
+    '''
+    global g_stepper_singleton
+    g_stepper_singleton = Stepper(pinA, pinB, pinC, pinD,
+                                  steps_per_rev, full_step)
+
+
+def rotate(degrees, rpm=Stepper.DEFAULT_RPM):
+    '''
+    Rotates stepper specified number of degrees at specified RPM
+    '''
+    g_stepper_singleton.rotate(degrees, rpm)
+
+
 if __name__ == "__main__":
-    stepper = Stepper('a', 'b', 'c', 'd')
+    # stepper = Stepper('a', 'b', 'c', 'd')
     # stepper = Stepper('a', 'b', 'c', 'd', full_step=False)
-    stepper.rotate(25)
-    print('Final Angle: %.4f' % stepper.angle)
+    # stepper.rotate(25)
+    # print('Final Angle: %.4f' % stepper.angle)
+
+    init('a', 'b', 'c', 'd')
+    # init('a', 'b', 'c', 'd', full_step=False)
+    rotate(25)
+    print('Final Angle: %.4f' % g_stepper_singleton.angle)

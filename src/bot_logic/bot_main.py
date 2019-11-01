@@ -4,7 +4,7 @@ import argparse as ap
 import cmd_listener
 # from peripherals import camera
 from peripherals import drv8835_motor_driver as dcmc
-from peripherals import stepper
+from peripherals import uln2003_stepper as smotor
 from position import Location
 from shared import constants
 
@@ -70,8 +70,6 @@ def test():  # Placeholder for GPS data gathering function, replace.
 
 
 def init_system():
-    global g_panning_stepper
-
     # Turn on LED indicating that the system is running
     GPIO.setup(constants.RUNNING_LED_PIN, GPIO.OUT)
     GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
@@ -89,10 +87,10 @@ def init_system():
 
         # camera.init(constants.CAM_CAP_DELAY_MS)
 
-        # g_panning_stepper = stepper.Stepper(constants.PAN_STEPPER_AIN_PIN,
-        #                                     constants.PAN_STEPPER_BIN_PIN,
-        #                                     constants.PAN_STEPPER_CIN_PIN,
-        #                                     constants.PAN_STEPPER_DIN_PIN)
+        # smotor.init(constants.PAN_STEPPER_AIN_PIN,
+        #             constants.PAN_STEPPER_BIN_PIN,
+        #             constants.PAN_STEPPER_CIN_PIN,
+        #             constants.PAN_STEPPER_DIN_PIN)
 
         # Startup bot's mainloop or manual control
         cmd_listener.start()
