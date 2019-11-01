@@ -1,4 +1,4 @@
-'''Controller for manipulating system's two DC motors.'''
+'''Controller for manipulating system's two DC motors via DRV8835 driver'''
 import Adafruit_BBIO.GPIO as GPIO
 from . import dc_motor as dcm
 import enum

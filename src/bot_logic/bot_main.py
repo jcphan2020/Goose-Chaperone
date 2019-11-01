@@ -4,7 +4,7 @@ import Adafruit_BBIO.UART as UART
 import argparse as ap
 import cmd_listener
 # from peripherals import camera
-from peripherals import dc_motor_controller as dcmc
+from peripherals import drv8835_motor_driver as dcmc
 from peripherals import stepper
 from position import Location
 from shared import constants
