@@ -12,12 +12,12 @@ _g_DRIVER_MODE_IN_IN = GPIO.LOW             # DRV8835 IN/IN mode
 
 # TODO Fine tune duty cycles for motors
 # Motor Speed Setting: Duty Cycle
-_g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
-                dcm.MotorSpeedEnum.PATROL: 30, dcm.MotorSpeedEnum.FAST: 75,
+_g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 15,
+                dcm.MotorSpeedEnum.PATROL: 25, dcm.MotorSpeedEnum.FAST: 40,
                 dcm.MotorSpeedEnum.TURN: 15}
 
-_g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 10,
-                dcm.MotorSpeedEnum.PATROL: 30, dcm.MotorSpeedEnum.FAST: 75,
+_g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 15,
+                dcm.MotorSpeedEnum.PATROL: 25, dcm.MotorSpeedEnum.FAST: 40,
                 dcm.MotorSpeedEnum.TURN: 15}
 
 
