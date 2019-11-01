@@ -1,6 +1,5 @@
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
-import Adafruit_BBIO.UART as UART
 import argparse as ap
 import cmd_listener
 # from peripherals import camera
@@ -84,17 +83,18 @@ def init_system():
         # Initialize peripherals
         # loc.start()
 
-        dcmc.init(constants.L_MOTOR_PWM_PIN, constants.L_MOTOR_SEL_PIN,
-                  constants.R_MOTOR_PWM_PIN, constants.R_MOTOR_SEL_PIN,
-                  constants.MOTOR_DRIVER_MODE_PIN)
+        # dcmc.init(constants.L_MOTOR_PWM_PIN, constants.L_MOTOR_SEL_PIN,
+        #           constants.R_MOTOR_PWM_PIN, constants.R_MOTOR_SEL_PIN,
+        #           constants.MOTOR_DRIVER_MODE_PIN)
 
         # camera.init(constants.CAM_CAP_DELAY_MS)
 
         # g_panning_stepper = stepper.Stepper(constants.PAN_STEPPER_AIN_PIN,
-        #                                      constants.PAN_STEPPER_BIN_PIN,
-        #                                      constants.PAN_STEPPER_CIN_PIN,
-        #                                      constants.PAN_STEPPER_DIN_PIN)
+        #                                     constants.PAN_STEPPER_BIN_PIN,
+        #                                     constants.PAN_STEPPER_CIN_PIN,
+        #                                     constants.PAN_STEPPER_DIN_PIN)
 
+        # Startup bot's mainloop or manual control
         cmd_listener.start()
     except Exception:
         raise
@@ -107,5 +107,5 @@ def init_system():
 
 
 if __name__ == "__main__":
-    print("Starting Bot")
+    print("Starting Bot...")
     init_system()
