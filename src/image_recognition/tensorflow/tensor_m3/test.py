@@ -1,5 +1,5 @@
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import cv2 as cv
 import time
 import keyboard
@@ -7,12 +7,22 @@ from imutils.video import FPS
 from imutils.video import VideoStream
 
 dir='./ssd_mobilenet_v1_coco_2018_01_28/'
+capture_id = 1
 
-capture = cv.VideoCapture(0)
+capture = cv.VideoCapture(1)
 
+print("capture")
+print(capture)
+
+if (capture is None):
+    print("No video capture found for id="+capture_id)
+    quit()
+
+
+print("Using tensorflow version " + tf.__version__)
 
 # Read the graph.
-with tf.gfile.FastGFile(dir+'frozen_inference_graph.pb', 'rb') as f:
+with tf.io.gfile.GFile(dir+'frozen_inference_graph.pb', 'rb') as f:
     graph_def = tf.GraphDef()
     graph_def.ParseFromString(f.read())
 
@@ -24,7 +34,7 @@ with tf.Session() as sess:
     # Read and preprocess an image.
     keepAlive = True
     while (keepAlive):
-        print('^')
+
         ret, img = capture.read()
         #img = vs.read()
         rows = img.shape[0]
@@ -55,9 +65,6 @@ with tf.Session() as sess:
         v = cv.waitKey(20)
         if (v == 27):
             keepAlive=False
-        else:
-            print('>')
-            #time.sleep(1)
 
 cv2.destroyAllWindows()
 
