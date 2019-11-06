@@ -7,9 +7,9 @@ from imutils.video import FPS
 from imutils.video import VideoStream
 
 dir='./ssd_mobilenet_v1_coco_2018_01_28/'
-capture_id = 1
+capture_id = 0
 
-capture = cv.VideoCapture(1)
+capture = cv.VideoCapture(capture_id)
 
 print("capture")
 print(capture)
