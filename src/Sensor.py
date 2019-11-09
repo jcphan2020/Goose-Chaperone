@@ -4,7 +4,7 @@ import time
 # HC-SR04 connection
 vcc = "5V"
 trigger = "GPIO_66"
-echo = "P8_8" #echo = "GPIO1_17"
+echo = "P8_8" 
 gnd = "GND"
 
 GPIO.cleanup()
