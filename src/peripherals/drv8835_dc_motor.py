@@ -1,4 +1,4 @@
-'''Driver for initializing and utilizing a DC motor.'''
+'''Driver for initializing/utilizing DC motor with DRV8835 motor driver'''
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import enum
