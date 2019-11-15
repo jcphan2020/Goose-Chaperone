@@ -1,6 +1,6 @@
 '''Controller for manipulating system's two DC motors via DRV8835 driver'''
 import Adafruit_BBIO.GPIO as GPIO
-from . import dc_motor as dcm
+from . import drv8835_dc_motor as dcm
 import enum
 from shared import pins
 import time
