@@ -5,14 +5,20 @@ and system messages
 from shared import pins
 
 # Configurations for pinouts
-ALERT_LED_PIN = 1  # Example, if we want to have an LED status light
 RUNNING_LED_PIN = 'USR1'  # LED indicating the system is up and running
 
-L_MOTOR_PWM_PIN = pins.PWM2B  # DC Motor pinout
-L_MOTOR_SEL_PIN = 'P8_14'
+L_MOTOR_PWM_PIN = pins.PWM2B  # DC Motor pinout (final prototype)
+L_MOTOR_SEL1_PIN = 'P8_9'
+L_MOTOR_SEL1_PIN = 'P8_11'
 R_MOTOR_PWM_PIN = pins.PWM2A
-R_MOTOR_SEL_PIN = 'P8_16'
-MOTOR_DRIVER_MODE_PIN = 'P8_18'
+R_MOTOR_SEL1_PIN = 'P8_15'
+R_MOTOR_SEL2_PIN = 'P8_17'
+
+# L_MOTOR_PWM_PIN = pins.PWM2B  # DC Motor pinout (small prototype)
+# L_MOTOR_SEL_PIN = 'P8_14'
+# R_MOTOR_PWM_PIN = pins.PWM2A
+# R_MOTOR_SEL_PIN = 'P8_16'
+# MOTOR_DRIVER_MODE_PIN = 'P8_18'
 
 PAN_STEPPER_AIN_PIN = 'P9_15'  # Stepper for panning camera/sensor pinout
 PAN_STEPPER_BIN_PIN = 'P9_23'

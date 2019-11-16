@@ -3,7 +3,7 @@ import Adafruit_BBIO.PWM as PWM
 import argparse as ap
 import cmd_listener
 # from peripherals import camera
-from peripherals import drv8835_motor_driver as dcmc
+from peripherals import TB67H420FTG_motor_driver as dcmc
 from peripherals import uln2003_stepper as smotor
 from position import Location
 from shared import constants
@@ -81,9 +81,10 @@ def init_system():
         # Initialize peripherals
         # loc.start()
 
-        # dcmc.init(constants.L_MOTOR_PWM_PIN, constants.L_MOTOR_SEL_PIN,
-        #           constants.R_MOTOR_PWM_PIN, constants.R_MOTOR_SEL_PIN,
-        #           constants.MOTOR_DRIVER_MODE_PIN)
+        # dcmc.init(constants.L_MOTOR_PWM_PIN,
+        #           constants.L_MOTOR_SEL1_PIN, constants.L_MOTOR_SEL2_PIN,
+        #           constants.R_MOTOR_PWM_PIN,
+        #           constants.R_MOTOR_SEL1_PIN, constants.R_MOTOR_SEL2_PIN)
 
         # camera.init(constants.CAM_CAP_DELAY_MS)
 
