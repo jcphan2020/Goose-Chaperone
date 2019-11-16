@@ -3,6 +3,7 @@ import Adafruit_BBIO.PWM as PWM
 import argparse as ap
 import cmd_listener
 # from peripherals import camera
+from peripherals import distance_sensor as dsense
 from peripherals import TB67H420FTG_motor_driver as dcmc
 from peripherals import uln2003_stepper as smotor
 from position import Location
@@ -92,6 +93,9 @@ def init_system():
         #             constants.PAN_STEPPER_BIN_PIN,
         #             constants.PAN_STEPPER_CIN_PIN,
         #             constants.PAN_STEPPER_DIN_PIN)
+
+        # dsense.init(constants.DIST_SENSOR_TRIGGER_PIN,
+        #             constants.DIST_SENSOR_ECHO_PIN)
 
         # Startup bot's mainloop or manual control
         cmd_listener.start()

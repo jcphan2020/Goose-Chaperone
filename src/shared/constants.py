@@ -25,6 +25,9 @@ PAN_STEPPER_BIN_PIN = 'P9_23'
 PAN_STEPPER_CIN_PIN = 'P9_25'
 PAN_STEPPER_DIN_PIN = 'P9_27'
 
+DIST_SENSOR_TRIGGER_PIN = 'P8_8'  # Distance sensor pinout
+DIST_SENSOR_ECHO_PIN = 'P8_10'
+
 # Alert Messages
 
 # Other configs
