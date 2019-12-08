@@ -9,8 +9,8 @@ RUNNING_LED_PIN = 'USR1'  # LED indicating the system is up and running
 
 L_MOTOR_PWM_PIN = pins.PWM2B  # DC Motor pinout (final prototype)
 L_MOTOR_SEL1_PIN = 'P8_9'
-L_MOTOR_SEL1_PIN = 'P8_11'
-R_MOTOR_PWM_PIN = pins.PWM2A
+L_MOTOR_SEL2_PIN = 'P8_11'
+R_MOTOR_PWM_PIN = pins.PWM1B
 R_MOTOR_SEL1_PIN = 'P8_15'
 R_MOTOR_SEL2_PIN = 'P8_17'
 

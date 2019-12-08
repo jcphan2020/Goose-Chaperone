@@ -9,13 +9,13 @@ _g_R_MOTOR_INDEX = 1        # Index of right motor in motor list
 
 # TODO Fine tune duty cycles for motors
 # Motor Speed Setting: Duty Cycle
-_g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 15,
-                dcm.MotorSpeedEnum.PATROL: 25, dcm.MotorSpeedEnum.FAST: 40,
-                dcm.MotorSpeedEnum.TURN: 15}
+_g_L_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 80,
+                dcm.MotorSpeedEnum.PATROL: 90, dcm.MotorSpeedEnum.FAST: 100,
+                dcm.MotorSpeedEnum.TURN: 80}
 
-_g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 15,
-                dcm.MotorSpeedEnum.PATROL: 25, dcm.MotorSpeedEnum.FAST: 40,
-                dcm.MotorSpeedEnum.TURN: 15}
+_g_R_DCYCLES = {dcm.MotorSpeedEnum.STOP: 0, dcm.MotorSpeedEnum.SLOW: 80,
+                dcm.MotorSpeedEnum.PATROL: 90, dcm.MotorSpeedEnum.FAST: 100,
+                dcm.MotorSpeedEnum.TURN: 80}
 
 
 @enum.unique
@@ -61,7 +61,7 @@ def init(l_channel, l_select1, l_select2, r_channel, r_select1, r_select2):
     print('DC Motor Controller Initialized')
 
 
-def set_speed(speed_setting, direction):
+def set_speed(speed_setting, direction=None):
     '''
     Sets the base speed for DC motors
 
