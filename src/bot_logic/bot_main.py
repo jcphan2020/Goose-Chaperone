@@ -2,6 +2,7 @@ import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import argparse as ap
 import cmd_listener
+import comvis as cs
 # from peripherals import camera
 from peripherals import distance_sensor as dsense
 from peripherals import TB67H420FTG_motor_driver as dcmc
@@ -76,6 +77,7 @@ def init_system():
     GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
 
     try:
+
         # Retrieve command line arguments
         init_cli_options()
 
@@ -99,6 +101,8 @@ def init_system():
 
         # Startup bot's mainloop or manual control
         cmd_listener.start()
+
+        loop()
     except Exception:
         raise
     finally:
@@ -107,6 +111,27 @@ def init_system():
         dcmc.cleanup()
         GPIO.cleanup()
         PWM.cleanup()
+
+def loop():
+    #Scan for targets
+    keepAlive = True
+    bird_count = 0
+    human_count = 0
+    while(keepAlive):
+        r = cs.get_detections()
+        i=0
+        while i<len(r):
+            if (r[i][cs.CLASSES_IDX] == cs.HUMAN):
+                print("Do Human Action")
+                human_count += 1
+            if (r[i][cs.CLASSES_IDX] == cs.BIRD):
+                print("Do Bird Action")
+                bird_count += 1
+            i+=1
+
+    #Scan for obstacles
+
+    #Control movement based on bird, human count
 
 
 if __name__ == "__main__":
