@@ -9,6 +9,7 @@ from peripherals import TB67H420FTG_motor_driver as dcmc
 from peripherals import uln2003_stepper as smotor
 from position import Location
 from shared import constants
+from time import sleep
 
 # Config variables
 DevMode = False
@@ -19,6 +20,10 @@ LocBuffer = 30
 
 loc = None
 
+BOOT_ALERT = 0          #Has started boot
+START_ALERT = 1         #Begining operation
+FAIL_START_ALERT = 2    #Failed to start
+SHUTDOWN_ALERT = 3      #Shutting down
 
 def init_cli_options():
     # Define Command Line Arguments
@@ -70,11 +75,37 @@ def init_cli_options():
 def test():  # Placeholder for GPS data gathering function, replace.
     print("Weeee")
 
+def flashLED(time, occurences, end_mode):
+    for i in range(0, occurences):
+        if (i%2==0):
+            GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
+        else:
+            GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
+        i+=1
+        sleep(time)
+    if (end_mode==0):
+        GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
+    else:
+        GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
+
+
+def alertLED(mode):
+    if (mode == BOOT_ALERT):
+        flashLED(0.2, 6, 1)
+    elif (mode == START_ALERT):
+        flashLED(0.1, 10, 1)
+    elif (mode == FAIL_START_ALERT):
+        flashLED(1,5,0)
+    else:
+        flashLED(.1,10,0)
+
 
 def init_system():
     # Turn on LED indicating that the system is running
     GPIO.setup(constants.RUNNING_LED_PIN, GPIO.OUT)
     GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
+
+    alertLED(START_ALERT)
 
     try:
 
@@ -104,6 +135,7 @@ def init_system():
 
         loop()
     except Exception:
+        alertLED(FAIL_START_ALERT)
         raise
     finally:
         # Cleanup
@@ -111,6 +143,7 @@ def init_system():
         dcmc.cleanup()
         GPIO.cleanup()
         PWM.cleanup()
+        alertLED(SHUTDOWN_ALERT)
 
 def loop():
     #Scan for targets
