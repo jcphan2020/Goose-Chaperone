@@ -31,8 +31,18 @@ utils_ops.tf = tf.compat.v1
 # Patch the location of gfile
 tf.gfile = tf.io.gfile
 
-#TODO Remove and test unecessary download code
+#Important Tags
+HUMAN=1
+BIRD=16
+
+#Indexes
+CLASSES_IDX=0
+SCORES_IDX=1
+BOX_IDX=2
+
 def load_model(model_dir):
+  #Good for pulling fresh models
+
   #base_url = 'http://download.tensorflow.org/models/object_detection/'
   #model_file = model_name + '.tar.gz'
   #model_dir = tf.keras.utils.get_file(
@@ -41,8 +51,6 @@ def load_model(model_dir):
   #  untar=True)
 
   #model_dir = pathlib.Path(model_dir)/"saved_model"
-
-  #print(model_dir)
 
   model = tf.saved_model.load(str(model_dir))
   model = model.signatures['serving_default']
@@ -55,15 +63,7 @@ detection_model = load_model('./')
 # List of the strings that is used to add correct label for each box.
 #PATH_TO_LABELS = 'models/research/object_detection/data/mscoco_label_map.pbtxt'
 PATH_TO_LABELS = './mscoco_label_map.pbtxt'
-
 category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
-  
-
-#PATH_TO_TEST_IMAGES_DIR = pathlib.Path('models/research/object_detection/test_images')
-#TEST_IMAGE_PATHS = sorted(list(PATH_TO_TEST_IMAGES_DIR.glob("*.jpg")))
-#TEST_IMAGE_PATHS
-
-#print(category_index)
 
 def run_inference(model, image):
   image = np.asarray(image)
@@ -99,9 +99,6 @@ def run_inference(model, image):
   return output_dict
 
 def show_inference(model, sess):
-  # the array based representation of the image will be used later in order to prepare the
-  # result image with boxes and labels on it.
-  #image_np = np.array(Image.open(image_path))
   ret,img = capture.read()
   rows = img.shape[0]
   cols = img.shape[1]
@@ -111,19 +108,10 @@ def show_inference(model, sess):
   image_np = inp
   # Actual detection.
   output_dict = run_inference(model, image_np)
-  # Visualization of the results of a detection.
-  
-  #print(output_dict['detection_boxes'])
-  #print(output_dict['detection_classes'])
-  #print(output_dict['detection_scores'])
-  #print('-------')
-
-  #quit()
 
   scores = output_dict['detection_scores']
   classes = output_dict['detection_classes']
   boxes = output_dict['detection_boxes']
-  #print(scores)
 
   #Get detected object data
   r = []
@@ -132,36 +120,16 @@ def show_inference(model, sess):
     if (scores[i] > 0.5):
       r.append((classes[i],scores[i], boxes[i]))
     i=i+1
-  print('<><><><>')
-  print(r)
-  print 
-  print('<><><><>')
 
-  #Important object ID'S
-  #1 = human
-  #16 = bird
+  return r
 
 def get_detections():
   return show_inference(detection_model, None)
 
-'''
-  for class_, score in zip(classes, scores):
-      print(class_, ':', score)
-  
-  vis_util.visualize_boxes_and_labels_on_image_array(
-      image_np,
-      output_dict['detection_boxes'],
-      output_dict['detection_classes'],
-      output_dict['detection_scores'],
-      category_index,
-      instance_masks=output_dict.get('detection_masks_reframed', None),
-      use_normalized_coordinates=True,
-      line_thickness=8)'''
-
-  #Doesn't work from terminal
-  #display(Image.fromarray(image_np))
-
-#keepAlive=True
-#while(keepAlive):
-#    show_inference(detection_model, None)
+def get_box_area(box):
+  c1=box[0]
+  c2=box[1]
+  c3=box[2]
+  c4=box[3]
+  return (c2-c1) * (c4-c3)
 
