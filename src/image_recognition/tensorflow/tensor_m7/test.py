@@ -6,8 +6,8 @@ import keyboard
 from imutils.video import FPS
 from imutils.video import VideoStream
 
-#dir='./ssd_mobilenet_v1_coco_2018_01_28/'
-dir='saved_model.pb'
+dir='./ssd_mobilenet_v1_coco_2018_01_28/'
+#dir='./saved_model.pb'
 capture_id = 0
 
 capture = cv.VideoCapture(capture_id)
