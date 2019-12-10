@@ -78,7 +78,7 @@ def test():  # Placeholder for GPS data gathering function, replace.
     print("Weeee")
 
 def flashLED(time, occurences, end_mode):
-    for i in range(0, occurences):
+    for i in range(0, occurences*2):
         if (i%2==0):
             GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
         else:
