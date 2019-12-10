@@ -2,10 +2,10 @@ import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 import argparse as ap
 import cmd_listener
-import comvis as cs
+#import comvis as cs
 # from peripherals import camera
 from peripherals import distance_sensor as dsense
-from peripherals import TB67H420FTG_motor_driver as dcmc
+#from peripherals import TB67H420FTG_motor_driver as dcmc
 from peripherals import uln2003_stepper as smotor
 from position import Location
 from shared import constants
@@ -24,6 +24,8 @@ BOOT_ALERT = 0          #Has started boot
 START_ALERT = 1         #Begining operation
 FAIL_START_ALERT = 2    #Failed to start
 SHUTDOWN_ALERT = 3      #Shutting down
+TARGET_DETECT = 4
+OBSTACLE_DETECT = 5
 
 def init_cli_options():
     # Define Command Line Arguments
@@ -96,6 +98,12 @@ def alertLED(mode):
         flashLED(0.1, 10, 1)
     elif (mode == FAIL_START_ALERT):
         flashLED(1,5,0)
+    elif (mode == TARGET_DETECT):
+        flashLED(.1,2,1)
+    elif (mode == OBSTACLE_DETECT):
+        flashLED(2, 1, 1)
+    elif (mode == SHUTDOWN_ALERT):
+        flashLED(1,5,0)
     else:
         flashLED(.1,10,0)
 
@@ -126,45 +134,56 @@ def init_system():
         #             constants.PAN_STEPPER_BIN_PIN,
         #             constants.PAN_STEPPER_CIN_PIN,
         #             constants.PAN_STEPPER_DIN_PIN)
-
-        # dsense.init(constants.DIST_SENSOR_TRIGGER_PIN,
-        #             constants.DIST_SENSOR_ECHO_PIN)
+        print("Initialize Dsense")
+        dsense.init(constants.DIST_SENSOR_TRIGGER_PIN,
+                    constants.DIST_SENSOR_ECHO_PIN)
+        print("Done Dsense")
 
         # Startup bot's mainloop or manual control
-        cmd_listener.start()
-
+        #cmd_listener.start()
+        print("Starting loop")
         loop()
     except Exception:
         alertLED(FAIL_START_ALERT)
+        print("Exception")
         raise
     finally:
+        print("End")
         # Cleanup
-        GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
-        dcmc.cleanup()
-        GPIO.cleanup()
-        PWM.cleanup()
+        #GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
+        #dcmc.cleanup()
+        #GPIO.cleanup()
+        #PWM.cleanup()
         alertLED(SHUTDOWN_ALERT)
 
 def loop():
-    #Scan for targets
     keepAlive = True
-    bird_count = 0
-    human_count = 0
     while(keepAlive):
-        r = cs.get_detections()
+        #Scan for targets
+        bird_count = 0
+        human_count = 0
+        #r = cs.get_detections()
         i=0
-        while i<len(r):
-            if (r[i][cs.CLASSES_IDX] == cs.HUMAN):
-                print("Do Human Action")
-                human_count += 1
-            if (r[i][cs.CLASSES_IDX] == cs.BIRD):
-                print("Do Bird Action")
-                bird_count += 1
-            i+=1
+        #while i<len(r):
+        #    if (r[i][cs.CLASSES_IDX] == cs.HUMAN):
+        #        print("Do Human Action")
+        #        human_count += 1
+        #    if (r[i][cs.CLASSES_IDX] == cs.BIRD):
+        #        print("Do Bird Action")
+        #        bird_count += 1
+        #    i+=1
+            
 
-    #Scan for obstacles
+        #Scan for obstacles
+        distance = dsense.detect_distance()
+        print(distance)
+        #Control movement based on bird, human count
+        if (distance < 100):
+            alertLED(OBSTACLE_DETECT)
+        elif (bird_count > 0):
+            alertLED(TARGET_DETECT)
 
-    #Control movement based on bird, human count
+
 
 
 if __name__ == "__main__":

@@ -9,3 +9,4 @@ while(keepAlive):
             print("Do Human Action")
         if (r[i][cs.CLASSES_IDX] == cs.BIRD):
             print("Do Bird Action")
+        i+=1

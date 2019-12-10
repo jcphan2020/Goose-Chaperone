@@ -100,6 +100,7 @@ def run_inference(model, image):
 
 def show_inference(model, sess):
   ret,img = capture.read()
+  _key = cv.waitKey(100)
   rows = img.shape[0]
   cols = img.shape[1]
   inp = cv.resize(img, (300, 300))
