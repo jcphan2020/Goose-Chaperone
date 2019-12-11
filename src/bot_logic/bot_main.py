@@ -20,12 +20,13 @@ LocBuffer = 30
 
 loc = None
 
-BOOT_ALERT = 0          #Has started boot
-START_ALERT = 1         #Begining operation
-FAIL_START_ALERT = 2    #Failed to start
-SHUTDOWN_ALERT = 3      #Shutting down
-TARGET_DETECT = 4       
+BOOT_ALERT = 0          # Has started boot
+START_ALERT = 1         # Begining operation
+FAIL_START_ALERT = 2    # Failed to start
+SHUTDOWN_ALERT = 3      # Shutting down
+TARGET_DETECT = 4
 OBSTACLE_DETECT = 5
+
 
 def init_cli_options():
     # Define Command Line Arguments
@@ -77,15 +78,17 @@ def init_cli_options():
 def test():  # Placeholder for GPS data gathering function, replace.
     print("Weeee")
 
+
 def flashLED(time, occurences, end_mode):
     for i in range(0, occurences*2):
-        if (i%2==0):
+        if (i % 2 == 0):
             GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
         else:
             GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
-        i+=1
+        i += 1
         sleep(time)
-    if (end_mode==0):
+
+    if (end_mode == 0):
         GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
     else:
         GPIO.output(constants.RUNNING_LED_PIN, GPIO.HIGH)
@@ -97,15 +100,15 @@ def alertLED(mode):
     elif (mode == START_ALERT):
         flashLED(0.1, 10, 1)
     elif (mode == FAIL_START_ALERT):
-        flashLED(1,5,0)
+        flashLED(1, 5, 0)
     elif (mode == TARGET_DETECT):
-        flashLED(.1,2,1)
+        flashLED(.1, 2, 1)
     elif (mode == OBSTACLE_DETECT):
         flashLED(2, 1, 1)
     elif (mode == SHUTDOWN_ALERT):
-        flashLED(1,5,0)
+        flashLED(1, 5, 0)
     else:
-        flashLED(.1,10,0)
+        flashLED(.1, 10, 0)
 
 
 def init_system():
@@ -134,10 +137,9 @@ def init_system():
         #             constants.PAN_STEPPER_BIN_PIN,
         #             constants.PAN_STEPPER_CIN_PIN,
         #             constants.PAN_STEPPER_DIN_PIN)
-        print("Initialize Dsense")
+
         dsense.init(constants.DIST_SENSOR_TRIGGER_PIN,
                     constants.DIST_SENSOR_ECHO_PIN)
-        print("Done Dsense")
 
         # Startup bot's mainloop or manual control
         #cmd_listener.start()
@@ -156,14 +158,15 @@ def init_system():
         #PWM.cleanup()
         alertLED(SHUTDOWN_ALERT)
 
+
 def loop():
     keepAlive = True
     while(keepAlive):
-        #Scan for targets
+        # Scan for targets
         bird_count = 0
         human_count = 0
         #r = cs.get_detections()
-        i=0
+        i = 0
         #while i<len(r):
         #    if (r[i][cs.CLASSES_IDX] == cs.HUMAN):
         #        print("Do Human Action")
@@ -172,18 +175,15 @@ def loop():
         #        print("Do Bird Action")
         #        bird_count += 1
         #    i+=1
-            
 
-        #Scan for obstacles
+        # Scan for obstacles
         distance = dsense.detect_distance()
         print(distance)
-        #Control movement based on bird, human count
+        # Control movement based on bird, human count
         if (distance < 100):
             alertLED(OBSTACLE_DETECT)
         elif (bird_count > 0):
             alertLED(TARGET_DETECT)
-
-
 
 
 if __name__ == "__main__":
