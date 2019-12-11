@@ -24,7 +24,7 @@ BOOT_ALERT = 0          #Has started boot
 START_ALERT = 1         #Begining operation
 FAIL_START_ALERT = 2    #Failed to start
 SHUTDOWN_ALERT = 3      #Shutting down
-TARGET_DETECT = 4
+TARGET_DETECT = 4       
 OBSTACLE_DETECT = 5
 
 def init_cli_options():
