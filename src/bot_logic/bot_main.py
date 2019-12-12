@@ -133,10 +133,11 @@ def init_system():
 
         # camera.init(constants.CAM_CAP_DELAY_MS)
 
-        # smotor.init(constants.PAN_STEPPER_AIN_PIN,
-        #             constants.PAN_STEPPER_BIN_PIN,
-        #             constants.PAN_STEPPER_CIN_PIN,
-        #             constants.PAN_STEPPER_DIN_PIN)
+        smotor.init(constants.PAN_STEPPER_AIN_PIN,
+                    constants.PAN_STEPPER_BIN_PIN,
+                    constants.PAN_STEPPER_CIN_PIN,
+                    constants.PAN_STEPPER_DIN_PIN,
+                    full_step=False)
 
         dsense.init(constants.DIST_SENSOR_TRIGGER_PIN,
                     constants.DIST_SENSOR_ECHO_PIN)
