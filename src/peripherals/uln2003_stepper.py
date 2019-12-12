@@ -24,6 +24,8 @@ class Stepper(object):
     STEPS_PER_REV = 4076.0  # Valid value for ULN2003 stepper motor driver
     DEFAULT_RPM = 15  # Valid value for ULN2003 stepper motor driver
     DEG_PER_REV = 360.0  # Number of degrees in full revolution
+    MAX_LEFT_ANGLE = 90
+    MAX_RIGHT_ANGLE = -90
 
     def __init__(self, pinA, pinB, pinC, pinD,
                  steps_per_rev=STEPS_PER_REV, full_step=True):
@@ -113,6 +115,14 @@ class Stepper(object):
         :param degrees: Angle, in degrees, to turn
         :param rpm: How fast to turn the motor
         '''
+        # Bounds check the stepper angle
+        final_angle = self.angle + degrees
+
+        if final_angle > Stepper.MAX_LEFT_ANGLE:
+            degrees = Stepper.MAX_LEFT_ANGLE - self.angle
+        elif final_angle < Stepper.MAX_RIGHT_ANGLE:
+            degrees = Stepper.MAX_RIGHT_ANGLE - self.angle
+
         # Time between steps in seconds
         step_delay = 60.0 / (self.steps_per_rev * rpm)
 
@@ -144,7 +154,7 @@ class Stepper(object):
             self._next_cmd = (self._next_cmd + cmd_step) % StepCmd.NUM_CMD
 
             # Modify stepper's angle
-            self.angle = (self.angle + angle_delta) % Stepper.DEG_PER_REV
+            self.angle = self.angle + angle_delta
 
         # Set pins to low to hold the stepper's angle
         self.__reset_pins()
@@ -158,6 +168,7 @@ def init(pinA, pinB, pinC, pinD, steps_per_rev=Stepper.STEPS_PER_REV,
     global g_stepper_singleton
     g_stepper_singleton = Stepper(pinA, pinB, pinC, pinD,
                                   steps_per_rev, full_step)
+    print('Stepper Initialized')
 
 
 def rotate(degrees, rpm=Stepper.DEFAULT_RPM):

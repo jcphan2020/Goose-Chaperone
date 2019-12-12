@@ -22,7 +22,7 @@ R_MOTOR_SEL2_PIN = 'P8_17'
 
 PAN_STEPPER_AIN_PIN = 'P9_15'  # Stepper for panning camera/sensor pinout
 PAN_STEPPER_BIN_PIN = 'P9_23'
-PAN_STEPPER_CIN_PIN = 'P9_25'
+PAN_STEPPER_CIN_PIN = 'P9_30'
 PAN_STEPPER_DIN_PIN = 'P9_27'
 
 DIST_SENSOR_TRIGGER_PIN = 'P8_8'  # Distance sensor pinout

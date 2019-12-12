@@ -143,30 +143,33 @@ def init_system():
 
         # Startup bot's mainloop or manual control
         #cmd_listener.start()
-        print("Starting loop")
+        print("Starting Mainloop")
         loop()
     except Exception:
         alertLED(FAIL_START_ALERT)
-        print("Exception")
+        print('Exception Occured')
         raise
     finally:
-        print("End")
-        # Cleanup
-        #GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
-        #dcmc.cleanup()
-        #GPIO.cleanup()
-        #PWM.cleanup()
         alertLED(SHUTDOWN_ALERT)
+        print('Shutting Down...')
+        # Cleanup
+        #dcmc.cleanup()
+        GPIO.cleanup()
+        PWM.cleanup()
+        GPIO.output(constants.RUNNING_LED_PIN, GPIO.LOW)
 
 
 def loop():
     keepAlive = True
+
     while(keepAlive):
-        # Scan for targets
         bird_count = 0
         human_count = 0
-        #r = cs.get_detections()
         i = 0
+
+        # Scan for targets
+        #r = cs.get_detections()
+
         #while i<len(r):
         #    if (r[i][cs.CLASSES_IDX] == cs.HUMAN):
         #        print("Do Human Action")
@@ -174,11 +177,12 @@ def loop():
         #    if (r[i][cs.CLASSES_IDX] == cs.BIRD):
         #        print("Do Bird Action")
         #        bird_count += 1
-        #    i+=1
+        #    i += 1
 
         # Scan for obstacles
         distance = dsense.detect_distance()
         print(distance)
+
         # Control movement based on bird, human count
         if (distance < 100):
             alertLED(OBSTACLE_DETECT)
