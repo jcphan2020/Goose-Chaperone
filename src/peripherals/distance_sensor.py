@@ -3,8 +3,8 @@ import Adafruit_BBIO.GPIO as GPIO
 import time
 
 _g_TRIGGER_PULSE_S = 0.00001  # Trigger pulse length (in seconds) = 10us
-_g_ECHO_START_TIMEOUT_MS = 25  # Wait time for echo return (approx. dist 425cm)
-_g_ECHO_END_TIMEOUT_MS = 12.5  # Time to wait for echo to end
+_g_ECHO_START_TIMEOUT_S = 0.025  # Wait time for echo return (approx. 425cm)
+_g_ECHO_END_TIMEOUT_S = 0.0125  # Time to wait for echo to end
 _g_SOUND_SPEED = 34300  # Speed of sound (cm/s) in air
 _g_initialized = False
 
@@ -48,7 +48,7 @@ def detect_distance():
     assert (_g_initialized), 'Distance sensor was not initialized'
 
     distance = -1
-    end_edge_detect = None
+    obj_detected = True
 
     # Execute sensor trigger (10us pulse)
     GPIO.output(g_sensor.trigger_pin, GPIO.HIGH)
@@ -56,27 +56,60 @@ def detect_distance():
     GPIO.output(g_sensor.trigger_pin, GPIO.LOW)
 
     # Listen for echo
-    # TODO wait_for_edge function needs testing
-    start_edge_detect = GPIO.wait_for_edge(g_sensor.echo_pin,
-                                           GPIO.RISING,
-                                           _g_ECHO_START_TIMEOUT_MS)
+    sense_start = time.time()
 
-    if start_edge_detect:
-        # Record start time of echo (in seconds)
+    while GPIO.input(g_sensor.echo_pin) == 0:
+        sense_current = time.time()
+        elapsed = sense_current - sense_start
+
+        # Check for timeout
+        if elapsed > _g_ECHO_START_TIMEOUT_S:
+            obj_detected = False
+            break
+
+    if obj_detected:
+        # Start of echo pulse
         echo_pulse_start = time.time()
+        sense_start = time.time()
 
-        # Wait for end of echo pulse
-        end_edge_detect = GPIO.wait_for_edge(g_sensor.echo_pin,
-                                             GPIO.FALLING,
-                                             _g_ECHO_END_TIMEOUT_MS)
+        while GPIO.input(g_sensor.echo_pin) == 1:
+            sense_current = time.time()
+            elapsed = sense_current - sense_start
 
-    if end_edge_detect:
-        # Calculate the time echo pulse spent high
+            # Check for timeout
+            if elapsed > _g_ECHO_END_TIMEOUT_S:
+                break
+
+        # Calculate echo pulse width
         echo_pulse_end = time.time()
-        pulse_width = echo_pulse_end - echo_pulse_start  # Echo pulse duration
+        pulse_width = echo_pulse_end - echo_pulse_start
 
         # Calculate the distance in centimeters (divide by 2 due to round trip)
         distance = (pulse_width * _g_SOUND_SPEED) / 2
+
+    # TODO wait_for_edge function is better way to do this but
+    #      it doesn't seem to be working and needs testing
+    # end_edge_detect = None
+    # start_edge_detect = GPIO.wait_for_edge(g_sensor.echo_pin,
+    #                                        GPIO.RISING,
+    #                                        _g_ECHO_START_TIMEOUT_MS)
+
+    # if start_edge_detect:
+    #     # Record start time of echo (in seconds)
+    #     echo_pulse_start = time.time()
+
+    #     # Wait for end of echo pulse
+    #     end_edge_detect = GPIO.wait_for_edge(g_sensor.echo_pin,
+    #                                          GPIO.FALLING,
+    #                                          _g_ECHO_END_TIMEOUT_MS)
+
+    # if end_edge_detect:
+    #     # Calculate the time echo pulse spent high
+    #     echo_pulse_end = time.time()
+    #     pulse_width = echo_pulse_end - echo_pulse_start  # Pulse duration
+
+    #     # Calculate the distance in centimeters (divide by 2 due to rtt)
+    #     distance = (pulse_width * _g_SOUND_SPEED) / 2
 
     return distance
 

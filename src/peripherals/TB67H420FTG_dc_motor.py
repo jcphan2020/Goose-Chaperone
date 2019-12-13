@@ -19,7 +19,7 @@ class MotorSpeedEnum(enum.Enum):
 class DCMotor(object):
     # PWM frequency in HZ
     # Max PWM freq for TB67H420FTG Motor Driver = 100 kHz
-    _PWM_FREQ_HZ = 20000
+    _PWM_FREQ_HZ = 40000
 
     def __init__(self, channel, select1, select2, dcycle_map):
         '''
@@ -37,9 +37,8 @@ class DCMotor(object):
         self.speed_setting = MotorSpeedEnum.STOP
 
         # Configure PWM channel with initial duty cycle of 0
-        PWM.start(channel=self.channel,
-                  duty_cycle=0,
-                  frequency=DCMotor._PWM_FREQ_HZ)
+        PWM.stop(self.channel)
+        PWM.start(self.channel, 0, frequency=DCMotor._PWM_FREQ_HZ)
 
         # Configure GPIO pin controlling motor direction
         GPIO.setup(self.select1, GPIO.OUT)

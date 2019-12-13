@@ -1,0 +1,50 @@
+<annotation>
+	<folder>golf sand trap</folder>
+	<filename>image_1331031888.jpg</filename>
+	<path>/home/thepenguin/Desktop/Dev/goose/sddec19-17/src/image_recognition/tensorflow/tensor_m7/images_scaled/images/training/golf sand trap/image_1331031888.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>480</width>
+		<height>270</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>sandtrap</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>98</xmin>
+			<ymin>168</ymin>
+			<xmax>176</xmax>
+			<ymax>184</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>sandtrap</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>172</xmin>
+			<ymin>161</ymin>
+			<xmax>256</xmax>
+			<ymax>178</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>water</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>108</xmin>
+			<ymin>139</ymin>
+			<xmax>333</xmax>
+			<ymax>163</ymax>
+		</bndbox>
+	</object>
+</annotation>

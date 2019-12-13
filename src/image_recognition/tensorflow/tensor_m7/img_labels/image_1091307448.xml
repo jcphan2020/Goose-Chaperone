@@ -1,0 +1,26 @@
+<annotation>
+	<folder>pond</folder>
+	<filename>image_1091307448.jpg</filename>
+	<path>/home/thepenguin/Desktop/Dev/goose/sddec19-17/src/image_recognition/tensorflow/tensor_m7/images_scaled/images/training/pond/image_1091307448.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>480</width>
+		<height>270</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>sandtrap</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>91</xmin>
+			<ymin>217</ymin>
+			<xmax>173</xmax>
+			<ymax>238</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,5 +1,5 @@
 '''Allows for manual control of the bot over Ethernet'''
-from peripherals import drv8835_motor_driver as dcmc
+from peripherals import TB67H420FTG_motor_driver as dcmc
 from shared import command
 import socket
 

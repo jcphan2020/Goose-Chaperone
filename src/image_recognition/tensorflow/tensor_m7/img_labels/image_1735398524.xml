@@ -1,0 +1,26 @@
+<annotation>
+	<folder>pond</folder>
+	<filename>image_1735398524.jpg</filename>
+	<path>/home/thepenguin/Desktop/Dev/goose/sddec19-17/src/image_recognition/tensorflow/tensor_m7/images_scaled/images/training/pond/image_1735398524.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>480</width>
+		<height>270</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>water</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>5</xmin>
+			<ymin>131</ymin>
+			<xmax>480</xmax>
+			<ymax>252</ymax>
+		</bndbox>
+	</object>
+</annotation>
